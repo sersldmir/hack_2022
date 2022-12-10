@@ -27,8 +27,9 @@ const Authorization = () => {
           setTextSubmitButton("Loading...");
           const responseOK = true;
           if (responseOK) {
-            localStorage.setItem("auth", `{login: ${login}}`);
-            dispatch(setUser({ login }));
+            const auth = { login: login.toLowerCase() };
+            localStorage.setItem("auth", JSON.stringify(auth));
+            dispatch(setUser({ login: login.toLowerCase() }));
           } else {
             setTextSubmitButton("LOGIN");
           }
