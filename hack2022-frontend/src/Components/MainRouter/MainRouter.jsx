@@ -1,4 +1,6 @@
 // @ts-nocheck
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -27,12 +29,13 @@ const MainRouter = () => {
         <Routes>
           <Route path="cctv" element={<Layout />}>
             <Route index element={user.login ? <CarInfo /> : <Authorization />} />
-            {/* <Route path="auth" element={<Authorization />} /> */}
           </Route>
           <Route path="*" element={<Navigate to={"cctv"} replace />} />
         </Routes>
       ) : (
-        <></>
+        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh" }}>
+          <CircularProgress size={"10rem"} />
+        </Box>
       )}
     </>
   );
