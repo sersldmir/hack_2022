@@ -15,7 +15,7 @@ const MainRouter = () => {
   useEffect(() => {
     const auth = JSON.parse(localStorage.getItem("auth"));
     if (auth) {
-      dispatch(setUser({ login: auth.toString() }));
+      dispatch(setUser({ login: auth.login }));
     }
     setCheckedLogged(true);
   }, []);
