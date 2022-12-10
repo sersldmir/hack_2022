@@ -1,0 +1,19 @@
+@import "../../../styles/variables.scss";
+
+.wrapper {
+  height: 60px;
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  h1 {
+    color: $blue;
+  }
+
+  .logo {
+    width: 100px;
+    height: 50px;
+    background-color: transparent;
+  }
+}

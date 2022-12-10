@@ -24,7 +24,7 @@ const Authorization = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          setTextSubmitButton("Loading...");
+          setTextSubmitButton("Logging...");
           const responseOK = true;
           if (responseOK) {
             const auth = { login: login.toLowerCase() };
@@ -67,7 +67,7 @@ const Authorization = () => {
         />
 
         <Button
-          disabled={login.trim().length === 0 || password.trim().length === 0 || textSubmitButton === "Loading..."}
+          disabled={login.trim().length === 0 || password.trim().length === 0 || textSubmitButton === "Logging..."}
           type="submit"
           sx={{ width: "100%", fontSize: "1rem", fontFamily: "sans-serif" }}
           variant="contained"

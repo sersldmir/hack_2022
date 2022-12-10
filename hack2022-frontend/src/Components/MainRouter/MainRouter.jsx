@@ -16,7 +16,6 @@ const MainRouter = () => {
 
   useEffect(() => {
     const auth = JSON.parse(localStorage.getItem("auth"));
-    console.log(typeof auth);
     if (auth) {
       dispatch(setUser({ login: auth.login }));
     }
