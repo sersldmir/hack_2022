@@ -5,15 +5,18 @@ import cl from "./Authorization.module.scss";
 const Authorization = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
-  const styledForTextFields = {
+  const stylesForTextFields = {
     width: "100%",
+    "&.label": {
+      fontSize: "1.5rem",
+    },
   };
   return (
     <div className={cl.authWrapper}>
       <h1 className="">Sign in</h1>
       <form action="#" className={cl.loginWrapper}>
         <TextField
-          sx={styledForTextFields}
+          sx={stylesForTextFields}
           id="login"
           label="Login"
           value={login}
@@ -22,7 +25,7 @@ const Authorization = () => {
           }}
         />
         <TextField
-          sx={styledForTextFields}
+          sx={stylesForTextFields}
           id="password"
           type={"password"}
           label="Password"
@@ -32,7 +35,7 @@ const Authorization = () => {
           }}
         />
 
-        <Button sx={{ width: "100%", fontSize: "1rem" }} variant="contained">
+        <Button sx={{ width: "100%", fontSize: "1rem", fontFamily: "sans-serif" }} variant="contained">
           Login
         </Button>
       </form>
