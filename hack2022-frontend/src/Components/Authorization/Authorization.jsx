@@ -21,6 +21,12 @@ const Authorization = () => {
         onSubmit={(e) => {
           e.preventDefault();
           setTextSubmitButton("Loading...");
+          const responseOK = true;
+          if (responseOK) {
+            localStorage.setItem("auth", "1234");
+          } else {
+            setTextSubmitButton("LOGIN");
+          }
         }}
         className={cl.loginWrapper}
       >
