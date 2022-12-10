@@ -13,7 +13,7 @@ const MainRouter = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const auth = JSON.parse(localStorage.getItem("auth"));
+    const auth = JSON.parse(JSON.stringify(localStorage.getItem("auth")));
     if (auth) {
       dispatch(setUser({ login: auth.login }));
     }
