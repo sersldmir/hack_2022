@@ -1,18 +1,21 @@
 // @ts-nocheck
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { selectUser, setUser } from "../../store/userSlice";
 import Authorization from "../Authorization/Authorization";
 import CarInfo from "../CarInfo/CarInfo";
 import Layout from "../Layout/Layout";
 
 const MainRouter = () => {
   const [checkedLogged, setCheckedLogged] = useState(false);
-  const [authenticated, setAuthenticated] = useState(false);
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const auth = JSON.parse(localStorage.getItem("auth"));
     if (auth) {
-      setAuthenticated(true);
+      dispatch(setUser({ login: auth.toString() }));
     }
     setCheckedLogged(true);
   }, []);
@@ -22,7 +25,7 @@ const MainRouter = () => {
       {checkedLogged ? (
         <Routes>
           <Route path="cctv" element={<Layout />}>
-            <Route index element={authenticated ? <CarInfo /> : <Authorization />} />
+            <Route index element={user.login ? <CarInfo /> : <Authorization />} />
             {/* <Route path="auth" element={<Authorization />} /> */}
           </Route>
           <Route path="*" element={<Navigate to={"cctv"} replace />} />

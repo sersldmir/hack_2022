@@ -1,6 +1,9 @@
+// @ts-nocheck
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../store/userSlice";
 import cl from "./Authorization.module.scss";
 const Authorization = () => {
   const [login, setLogin] = useState("");
@@ -8,6 +11,7 @@ const Authorization = () => {
   const [loginOnBlur, setLoginOnBlur] = useState(false);
   const [passwordOnBlur, setPasswordOnBlur] = useState(false);
   const [textSubmitButton, setTextSubmitButton] = useState("LOGIN");
+  const dispatch = useDispatch();
   const stylesForTextFields = {
     width: "100%",
     "&.label": {
@@ -24,6 +28,7 @@ const Authorization = () => {
           const responseOK = true;
           if (responseOK) {
             localStorage.setItem("auth", "1234");
+            dispatch(setUser({ login: "user" }));
           } else {
             setTextSubmitButton("LOGIN");
           }
