@@ -5,6 +5,8 @@ import cl from "./Authorization.module.scss";
 const Authorization = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [loginOnBlur, setLoginOnBlur] = useState(false);
+  const [passwordOnBlur, setPasswordOnBlur] = useState(false);
   const stylesForTextFields = {
     width: "100%",
     "&.label": {
@@ -13,16 +15,27 @@ const Authorization = () => {
   };
   return (
     <div className={cl.authWrapper}>
-      <h1 className="">Sign in</h1>
-      <form action="#" className={cl.loginWrapper}>
+      <h1>Sign in</h1>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log(password);
+        }}
+        className={cl.loginWrapper}
+      >
         <TextField
           sx={stylesForTextFields}
           id="login"
           label="Login"
           value={login}
+          onBlur={() => {
+            setLoginOnBlur(true);
+          }}
           onChange={(e) => {
             setLogin(e.target.value);
           }}
+          error={login.trim().length === 0 && loginOnBlur}
+          helperText={login.trim().length === 0 && loginOnBlur ? "Enter valid login!" : ""}
         />
         <TextField
           sx={stylesForTextFields}
@@ -33,9 +46,14 @@ const Authorization = () => {
           onChange={(e) => {
             setPassword(e.target.value);
           }}
+          error={password.trim().length === 0 && passwordOnBlur}
+          onBlur={() => {
+            setPasswordOnBlur(true);
+          }}
+          helperText={password.trim().length === 0 && passwordOnBlur ? "Enter valid password" : ""}
         />
 
-        <Button sx={{ width: "100%", fontSize: "1rem", fontFamily: "sans-serif" }} variant="contained">
+        <Button disabled={login.trim().length === 0 || password.trim().length === 0} type="submit" sx={{ width: "100%", fontSize: "1rem", fontFamily: "sans-serif" }} variant="contained">
           Login
         </Button>
       </form>
