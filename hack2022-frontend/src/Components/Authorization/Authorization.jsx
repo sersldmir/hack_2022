@@ -7,6 +7,7 @@ const Authorization = () => {
   const [password, setPassword] = useState("");
   const [loginOnBlur, setLoginOnBlur] = useState(false);
   const [passwordOnBlur, setPasswordOnBlur] = useState(false);
+  const [textSubmitButton, setTextSubmitButton] = useState("LOGIN");
   const stylesForTextFields = {
     width: "100%",
     "&.label": {
@@ -19,7 +20,7 @@ const Authorization = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          console.log(password);
+          setTextSubmitButton("Loading...");
         }}
         className={cl.loginWrapper}
       >
@@ -53,8 +54,13 @@ const Authorization = () => {
           helperText={password.trim().length === 0 && passwordOnBlur ? "Enter valid password" : ""}
         />
 
-        <Button disabled={login.trim().length === 0 || password.trim().length === 0} type="submit" sx={{ width: "100%", fontSize: "1rem", fontFamily: "sans-serif" }} variant="contained">
-          Login
+        <Button
+          disabled={login.trim().length === 0 || password.trim().length === 0 || textSubmitButton === "Loading..."}
+          type="submit"
+          sx={{ width: "100%", fontSize: "1rem", fontFamily: "sans-serif" }}
+          variant="contained"
+        >
+          {textSubmitButton}
         </Button>
       </form>
     </div>
