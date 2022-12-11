@@ -15,12 +15,15 @@ export const CarDescription = ({ closeHandler, carNumber }) => {
       }}
     >
       <div style={{ position: "relative", width: "100%" }}>
-        <Htag tag={"h3"}>{carNumber}</Htag>
+        <Htag tag={"h2"}>{carNumber}</Htag>
         <button onClick={closeHandler} style={{ position: "absolute", right: 0, top: 1, background: "none" }}>
           х
         </button>
       </div>
-      <p></p>
+      <div style={{ height: "90%", display: "flex", flexDirection: "column", justifyContent: "space-around", alignItems: "center" }}>
+        <Htag tag={"h3"}>Передвижение машины</Htag>
+        <Htag tag={"h3"}>Посещение машины</Htag>
+      </div>
     </CardBox>
   );
 };

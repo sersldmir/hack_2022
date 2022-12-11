@@ -13,7 +13,6 @@ import { CarDescription } from "./CarDescription/CarDescription";
 import { ListItemCar } from "./ListItemCar/ListItemCar";
 
 const CarInfo = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [selectedCarNumber, setSelectedCarNumber] = useState("");
   const cars = [
     { carNumber: "р55н-59", color: "red" },
@@ -62,7 +61,7 @@ const CarInfo = () => {
           ))}
         </div>
 
-        {selectedCarNumber && <CarDescription closeHandler={closeHandler} carNumber={selectedCarNumber} />}
+        {selectedCarNumber ? <CarDescription closeHandler={closeHandler} carNumber={selectedCarNumber} /> : <></>}
       </CardBox>
     </div>
   );
