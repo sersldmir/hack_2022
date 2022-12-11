@@ -23,6 +23,7 @@ export const CarDescription = ({ closeHandler, carNumber }) => {
         </IconButton>
       </div>
       <div style={{ height: "90%", display: "flex", flexDirection: "column", justifyContent: "space-around", alignItems: "center" }}>
+        <Htag tag={"h3"}>Информация о водителе</Htag>
         <Htag tag={"h3"}>Передвижение машины</Htag>
         <Htag tag={"h3"}>Посещение машины</Htag>
       </div>
