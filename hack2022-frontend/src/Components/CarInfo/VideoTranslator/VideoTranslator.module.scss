@@ -1,0 +1,11 @@
+.camera {
+  &__item {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 5px;
+    width: calc((100% / 2) - 20px);
+    margin: 10px;
+    box-shadow: 22px 22px 84px rgba(237, 238, 247, 0.7);
+
+
+  }
+}
