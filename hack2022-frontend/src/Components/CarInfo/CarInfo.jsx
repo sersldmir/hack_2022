@@ -36,7 +36,7 @@ const CarInfo = () => {
         <div style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.15)" }}>
           <Htag tag={"h3"}>Видеоряд</Htag>
         </div>
-        <div style={{ display: "flex", flexWrap: "wrap", margin: "0 -10px" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", margin: "0 -10px", position: "relative" }}>
           {videoTranslators.map((videoTranslator) => (
             <VideoTranslator videoName={videoTranslator.videName} />
           ))}
