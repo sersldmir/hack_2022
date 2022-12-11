@@ -1,5 +1,6 @@
 # Импорт библиотек
 
+from pathlib import Path
 import json
 from random import randint, seed
 from time import time
@@ -30,45 +31,28 @@ def decode_batch(out):
         plate_number.append(outstr)
     return plate_number
 
-# получение инфы по номеру
-# тут должен быть api, который пробивает номер по базам гибдд (например, узнать через гос номер vin, а далее по нему
-# составить отчет и вывести)
-# а пока будет рандомно выдавать надписи legit или fake 
-def api_or_smth(plate_number):
-    seed(time())
-    outcome = ['fake', 'legit']
-    rand_ind = randint(0,1)
-    return {plate_number:outcome[rand_ind]}
 
 class AutoPlateRecognizer():
 
-    def __init__(self, content_path):
+    def __init__(self, content_path='./neuro_network_plate/Data'):
         # видео для расшифровки
-        self.decode_content = cv2.VideoCapture(content_path)
+        self.decode_content = Path(content_path)
+        # self.decode_content = cv2.VideoCapture(content_path)
         # модель для распознания номера из фото
         self.path_to_model_1 = './neuro_network_plate/Neuro_network/model_resnet.tflite'
         # модель для извлечения инфы из номера
         self.path_to_model_2 = './neuro_network_plate/Neuro_network/model1_nomer.tflite'
         # заготовка под расшифрованный номер
-        self.plate_number = ''
+        self.plate_numbers = []
 
-    def recognize_number(self, save_inside = False):
-        # считывание фреймов с видео
-        frames = []
-        count_frames = 0 # ограничение по фреймам, в будущем можно выставить, чтобы прога анализировала каждый фрейм
-        # и методом большинства выбирала предсказание
-        while count_frames<3:
-            ret,frame = self.decode_content.read()
-            if ret:
-                frames.append(frame)
-            else:
-                break
-        self.decode_content.release()
+    def recognize_number(self, save_inside = True):
+        videos_of_plates_folder_path = self.decode_content
+        videos_paths = [str(i) for i in videos_of_plates_folder_path.glob('*.mp4')]
+        for path in videos_paths:
+            video = cv2.VideoCapture(path)
+            ret, fr = video.read()
+            video.release()
         # cv2.destroyAllWindows()
-        # заготовка под финальный номер
-        result = ''
-        # проходимся по фреймам и пытаемся распознать номер
-        for fr in frames:
             # извлекаем номер из изображения
             image_height, image_width, _ = fr.shape
             image = cv2.resize(fr, (1024,1024))
@@ -131,25 +115,30 @@ class AutoPlateRecognizer():
                 interpreter.set_tensor(input_details[0]['index'], X_data1)
                 interpreter.invoke()
                 net_out_value = interpreter.get_tensor(output_details[0]['index'])
-                result+=''.join(decode_batch(net_out_value))
-                if save_inside:
-                    self.plate_number+=result
-                else:
-                    return result
-            else: # если номер не распознан, идем к следующему кадру
-                continue
-        return 'не распознано'
+                result=''.join(decode_batch(net_out_value))
+                self.plate_numbers.append(result)
+            else: # если номер не распознан
+                self.plate_numbers.append('Не распознан!')
+        if not save_inside:
+            return result
+
+    # получение инфы по номеру
+    # тут должен быть api, который пробивает номер по базам гибдд (например, узнать через гос номер vin, а далее по нему
+    # составить отчет и вывести)
+    # а пока будет рандомно выдавать надписи legit или fake 
+    def api_or_smth(self):
+        seed(time())
+        outcome = ['fake', 'legit']
+        rand_ind = randint(0,1)
+        self.plate_numbers = {plate_number:outcome[rand_ind] for plate_number in self.plate_numbers}
+
+    def save_outcome(self, save_path = './neuro_network_plate/Results/test.json'):
+        with open(save_path, 'w') as f:
+            json.dump(self.plate_numbers, f, ensure_ascii=False)
 
 
 if __name__ == '__main__':
-    test_video = AutoPlateRecognizer('./neuro_network_plate/Data/video_2022-12-11_02-12-14.mp4')
-    test_plate = test_video.recognize_number()
-    test_result = api_or_smth(test_plate)
-    if test_result!='не распознано':
-        for k,v in test_result.items():
-            print(f'Номер - {k}; статус - {v}')
-        with open('./neuro_network_plate/Results/test.json', 'w') as f:
-            json.dump(test_result, f, ensure_ascii=False)
-    #     print('Результаты сохранены в json файл')
-    # else:
-    #     print('Провалено')
+    test_plates = AutoPlateRecognizer()
+    test_plates.recognize_number()
+    test_plates.api_or_smth()
+    test_plates.save_outcome()

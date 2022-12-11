@@ -10,8 +10,11 @@ import json
 
 class FaceRecognizer():
 
-    def __init__(self, video_folder_path):
-        self.videos_path = video_folder_path
+    def __init__(self, video_folder_path=Path().cwd()/'neuro_network_face'/'Data'/'incoming_video'):
+        if video_folder_path == Path().cwd()/'neuro_network_face'/'Data'/'incoming_video':
+            self.videos_path = video_folder_path
+        else:
+            self.videos_path = Path(video_folder_path)
         with open(Path().cwd()/'neuro_network_face'/'Data'/'known_faces'/'encodings.pickle', 'rb') as f:
             self.encoding_dict = pickle.load(f)
         with open(Path().cwd()/'neuro_network_face'/'Data'/'known_faces'/'names.pickle', 'rb') as f:
@@ -62,12 +65,12 @@ class FaceRecognizer():
             self.res = result
             return result
 
-    def save_to_json(self):
-        with open(Path().cwd()/'neuro_network_face'/'Results'/'outcome.json', 'w') as f:
+    def save_to_json(self, save_path = Path().cwd()/'neuro_network_face'/'Results'/'outcome.json'):
+        with open(save_path, 'w') as f:
             json.dump(self.res, f, ensure_ascii=False)
 
 if __name__ == '__main__':
-    recognizer = FaceRecognizer(Path().cwd()/'neuro_network_face'/'Data'/'incoming_video')
+    recognizer = FaceRecognizer()
     recognizer.recognize()
     recognizer.compare_n_match()
     recognizer.save_to_json()

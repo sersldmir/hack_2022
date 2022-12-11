@@ -8,8 +8,11 @@ from pathlib import Path
 
 class FaceEncoder():
     
-    def __init__(self, images_path):
-        self.im_path = images_path
+    def __init__(self, images_path=Path().cwd()/'neuro_network_face'/'Data'/'faces_photos'):
+        if images_path==Path().cwd()/'neuro_network_face'/'Data'/'faces_photos':
+            self.im_path = images_path
+        else:
+            self.im_path = Path(images_path)
         self.encod_dict = ''
         self.names_dict = ''
 
@@ -42,6 +45,6 @@ class FaceEncoder():
 
 
 if __name__ == '__main__':
-    encoder = FaceEncoder(Path().cwd()/'neuro_network_face'/'Data'/'faces_photos')
+    encoder = FaceEncoder()
     encoder.encode()
     encoder.save_outcome()
