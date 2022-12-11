@@ -2,7 +2,7 @@ import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
 import { Box, ListItem, ListItemButton, ListItemText, Tooltip } from "@mui/material";
 import React from "react";
 
-export const ListItemCar = ({ openHandler, carNumber, color }) => {
+export const ListItemCar = ({openHandler, carNumber, color}) => {
   return (
     <ListItem
       onClick={openHandler}

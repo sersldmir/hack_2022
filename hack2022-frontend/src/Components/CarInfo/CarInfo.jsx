@@ -9,21 +9,20 @@ import video from "../../assets/video/video.mp4";
 import { Search } from "../Search/Search";
 
 import CircularProgress from "@mui/material/CircularProgress";
+import { CarDescription } from "./CarDescription/CarDescription";
 import { ListItemCar } from "./ListItemCar/ListItemCar";
 
 const CarInfo = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedCar, setSelectedCar] = useState("");
+  const [selectedCarNumber, setSelectedCarNumber] = useState("");
   const cars = [
     { carNumber: "р55н-59", color: "red" },
     { carNumber: "а84а-33", color: "green" },
   ];
 
-  const openHandler = () => {
-    setIsOpen((state) => !state);
+  const closeHandler = () => {
+    setSelectedCarNumber("");
   };
-
-  const openCarInfo = () => {};
 
   return (
     <div className={styles.container}>
@@ -52,29 +51,18 @@ const CarInfo = () => {
         <Search />
         <div style={{ padding: "10px 0", overflowY: "auto", height: "80%" }}>
           {cars.map(({ carNumber, color }) => (
-            <ListItemCar carNumber={carNumber} color={color} />
+            <ListItemCar
+              key={carNumber}
+              carNumber={carNumber}
+              color={color}
+              openHandler={() => {
+                setSelectedCarNumber(carNumber);
+              }}
+            />
           ))}
         </div>
 
-        {isOpen && (
-          <CardBox
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "#fff",
-              borderRadius: "8px",
-              opacity: 1,
-            }}
-          >
-            <div style={{ position: "relative", width: "100%" }}>
-              <Htag tag={"h3"}>р55н-59</Htag>
-              <button onClick={openHandler} style={{ position: "absolute", right: 0, top: 1, background: "none" }}>
-                х
-              </button>
-            </div>
-            <p></p>
-          </CardBox>
-        )}
+        {selectedCarNumber && <CarDescription closeHandler={closeHandler} carNumber={selectedCarNumber} />}
       </CardBox>
     </div>
   );
