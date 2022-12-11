@@ -10,13 +10,11 @@ import Button from "@mui/material/Button";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-import cl from "./Header.module.scss";
-
 const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   return (
-    <header className={cl.wrapper}>
+    <header>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
