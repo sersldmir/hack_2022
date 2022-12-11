@@ -5,7 +5,14 @@
     width: calc((100% / 2) - 20px);
     margin: 10px;
     box-shadow: 22px 22px 84px rgba(237, 238, 247, 0.7);
+  }
 
-
+  &__item_clicked {
+    opacity: 1;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
   }
 }
