@@ -1,31 +1,44 @@
 // @ts-nocheck
-import { Button } from "@mui/material";
+
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../../../store/userSlice";
+
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+
 import cl from "./Header.module.scss";
+
 const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   return (
     <header className={cl.wrapper}>
-      <img className={cl.logo} src={require("../../../imgs/logo.png")} alt="logo" />
-      <h1>CCTV</h1>
-      {user.login ? (
-        <Button
-          sx={{ fontWeight: "1000" }}
-          variant="outlined"
-          color="error"
-          onClick={() => {
-            localStorage.clear();
-            dispatch(logout());
-          }}
-        >
-          Logout
-        </Button>
-      ) : (
-        <></>
-      )}
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              CCTV
+            </Typography>
+            {user.login ? (
+              <Button
+                color="inherit"
+                onClick={() => {
+                  localStorage.clear();
+                  dispatch(logout());
+                }}
+              >
+                Выход
+              </Button>
+            ) : (
+              <></>
+            )}
+          </Toolbar>
+        </AppBar>
+      </Box>
     </header>
   );
 };
