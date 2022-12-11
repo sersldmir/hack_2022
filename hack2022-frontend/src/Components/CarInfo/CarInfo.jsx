@@ -13,6 +13,8 @@ import Tooltip from "@mui/material/Tooltip";
 import video from "../../assets/video/video.mp4";
 import { Search } from "../Search/Search";
 
+import CircularProgress from "@mui/material/CircularProgress";
+
 const CarInfo = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,9 +30,14 @@ const CarInfo = () => {
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", margin: "0 -10px" }}>
           <CardBox className={styles.camera__item}>
-            <video autoPlay={true} width={"100%"} height={"calc(100% /2)"} muted>
-              <source src={video} type="video/mp4" />
-            </video>
+            <div width={"100%"} height={"calc(100% /2)"} style={{ position: "relative" }}>
+              <video style={{ position: "relative", zIndex: 1 }} preload="auto" autoPlay={true} width={"100%"} height={"100%"} muted>
+                <source src={video} type="video/mp4" />
+              </video>
+              <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", width: "100%", position: "absolute", zIndex: 0, top: "0", left: "0" }}>
+                <CircularProgress size={"1.8rem"} />
+              </Box>
+            </div>
           </CardBox>
         </div>
       </CardBox>
