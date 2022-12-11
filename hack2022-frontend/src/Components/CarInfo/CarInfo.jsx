@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { CardBox } from "../CardBox/CardBox";
 import { Htag } from "../Htag/Htag";
 import styles from "./CarInfo.module.scss";
@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import video from "../../assets/video/video.mp4";
 import { Search } from "../Search/Search";
 
+import { debounce } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { CarDescription } from "./CarDescription/CarDescription";
 import { ListItemCar } from "./ListItemCar/ListItemCar";
@@ -19,9 +20,22 @@ const CarInfo = () => {
     { carNumber: "а84а-33", color: "green" },
   ];
 
+  const [searchInfo, setSearchInfo] = useState("");
+
+  const searchForCars = useCallback(
+    debounce((e) => setSearchInfo(e.target.value), 400),
+    []
+  );
+
+  const filteredCars = useMemo(() => {
+    return cars.filter((car) => car.carNumber.includes(searchInfo));
+  }, [cars, searchInfo]);
+
   const closeHandler = () => {
     setSelectedCarNumber("");
   };
+
+  console.log(searchInfo);
 
   return (
     <div className={styles.container}>
@@ -47,9 +61,9 @@ const CarInfo = () => {
         <div style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.15)" }}>
           <Htag tag={"h3"}>Список машин</Htag>
         </div>
-        <Search />
+        <Search searchForCars={searchForCars} />
         <div style={{ padding: "10px 0", overflowY: "auto", height: "80%" }}>
-          {cars.map(({ carNumber, color }) => (
+          {filteredCars.map(({ carNumber, color }) => (
             <ListItemCar
               key={carNumber}
               carNumber={carNumber}

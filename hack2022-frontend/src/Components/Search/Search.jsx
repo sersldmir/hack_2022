@@ -49,13 +49,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const Search = () => {
+export const Search = ({ searchForCars }) => {
   return (
     <SearchUI>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
-      <StyledInputBase placeholder="Search…" inputProps={{ "aria-label": "search" }} />
+      <StyledInputBase onChange={searchForCars} placeholder="Search…" inputProps={{ "aria-label": "search" }} />
     </SearchUI>
   );
 };
