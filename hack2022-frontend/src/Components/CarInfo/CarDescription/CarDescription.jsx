@@ -18,7 +18,7 @@ export const CarDescription = ({ closeHandler, carNumber }) => {
     >
       <div style={{ position: "relative", width: "100%" }}>
         <Htag tag={"h2"}>{carNumber}</Htag>
-        <IconButton onClick={closeHandler} disableTouchRipple sx={{ position: "absolute", right: "0", top: "-4px" }}>
+        <IconButton onClick={closeHandler} disableTouchRipple sx={{ position: "absolute", right: "0", top: "-6.5px" }}>
           <CloseIcon />
         </IconButton>
       </div>
