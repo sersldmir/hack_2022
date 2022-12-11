@@ -150,6 +150,6 @@ if __name__ == '__main__':
             print(f'Номер - {k}; статус - {v}')
         with open('./neuro_network_plate/Results/test.json', 'w') as f:
             json.dump(test_result, f, ensure_ascii=False)
-        print('Результаты сохранены в json файл')
-    else:
-        print('Провалено')
+    #     print('Результаты сохранены в json файл')
+    # else:
+    #     print('Провалено')
