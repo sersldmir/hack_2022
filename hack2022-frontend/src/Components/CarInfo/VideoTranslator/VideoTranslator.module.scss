@@ -5,6 +5,7 @@
     width: calc((100% / 2) - 20px);
     margin: 10px;
     box-shadow: 22px 22px 84px rgba(237, 238, 247, 0.7);
+    cursor: pointer;
   }
 
   &__item_clicked {
