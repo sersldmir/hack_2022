@@ -23,7 +23,7 @@ const CarInfo = () => {
   const [searchInfo, setSearchInfo] = useState("");
 
   const searchForCars = useCallback(
-    debounce((e) => setSearchInfo(e.target.value), 400),
+    debounce((e) => setSearchInfo(e.target.value), 200),
     []
   );
 
@@ -35,7 +35,6 @@ const CarInfo = () => {
     setSelectedCarNumber("");
   };
 
-  console.log(searchInfo);
 
   return (
     <div className={styles.container}>
