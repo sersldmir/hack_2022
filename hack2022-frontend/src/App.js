@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.scss";
-import MainRouter from "./Components/MainRouter/MainRouter";
+import MainRouter from "./сomponents/MainRouter/MainRouter";
 
 function App() {
   return (
