@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { CardBox } from "../CardBox/CardBox";
 import { Htag } from "../Htag/Htag";
 import styles from "./CarInfo.module.scss";
@@ -7,7 +7,6 @@ import styles from "./CarInfo.module.scss";
 // import video from "../../assets/video/video.mp4";
 import { Search } from "../Search/Search";
 
-import { debounce } from "@mui/material";
 import { CarDescription } from "./CarDescription/CarDescription";
 import { ListItemCar } from "./ListItemCar/ListItemCar";
 import { VideoTranslator } from "./VideoTranslator/VideoTranslator";
@@ -22,11 +21,6 @@ const CarInfo = () => {
   const videoTranslators = [{ videName: "video.mp4" }, { videName: "video.mp4" }];
 
   const [searchInfo, setSearchInfo] = useState("");
-
-  const searchForCars = useCallback(
-    debounce((e) => setSearchInfo(e.target.value), 200),
-    []
-  );
 
   const filteredCars = useMemo(() => {
     return cars.filter((car) => car.carNumber.includes(searchInfo));
@@ -53,7 +47,7 @@ const CarInfo = () => {
         <div style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.15)" }}>
           <Htag tag={"h3"}>Список машин</Htag>
         </div>
-        <Search searchForCars={searchForCars} />
+        <Search setSearchInfo={setSearchInfo} />
         <div style={{ padding: "10px 0", overflowY: "auto", height: "80%" }}>
           {filteredCars.map(({ carNumber, color }) => (
             <ListItemCar

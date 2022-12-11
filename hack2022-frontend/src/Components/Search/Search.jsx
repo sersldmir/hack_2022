@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import { alpha, styled } from "@mui/material/styles";
+import { debounce } from "@mui/material";
 
 const SearchUI = styled("div")(({ theme }) => ({
   position: "relative",
@@ -49,7 +50,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const Search = ({ searchForCars }) => {
+export const Search = ({ setSearchInfo }) => {
+  const searchForCars = useCallback(
+    debounce((e) => setSearchInfo(e.target.value), 300),
+    []
+  );
   return (
     <SearchUI>
       <SearchIconWrapper>
