@@ -4,23 +4,26 @@ import { CardBox } from "../CardBox/CardBox";
 import { Htag } from "../Htag/Htag";
 import styles from "./CarInfo.module.scss";
 
-import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
 import Box from "@mui/material/Box";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Tooltip from "@mui/material/Tooltip";
 import video from "../../assets/video/video.mp4";
 import { Search } from "../Search/Search";
 
 import CircularProgress from "@mui/material/CircularProgress";
+import { ListItemCar } from "./ListItemCar/ListItemCar";
 
 const CarInfo = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedCar, setSelectedCar] = useState("");
+  const cars = [
+    { carNumber: "р55н-59", color: "red" },
+    { carNumber: "а84а-33", color: "green" },
+  ];
 
   const openHandler = () => {
     setIsOpen((state) => !state);
   };
+
+  const openCarInfo = () => {};
 
   return (
     <div className={styles.container}>
@@ -48,32 +51,16 @@ const CarInfo = () => {
         </div>
         <Search />
         <div style={{ padding: "10px 0", overflowY: "auto", height: "80%" }}>
-          <ListItem
-            onClick={openHandler}
-            component="div"
-            disablePadding
-            secondaryAction={
-              <Tooltip title={"Машина на территорий"}>
-                <Box aria-label="comment">
-                  <CircleRoundedIcon sx={{ color: "red" }} />
-                </Box>
-              </Tooltip>
-            }
-          >
-            <ListItemButton>
-              <ListItemText primary={`р55н-59`} />
-            </ListItemButton>
-          </ListItem>
+          {cars.map(({ carNumber, color }) => (
+            <ListItemCar carNumber={carNumber} color={color} />
+          ))}
         </div>
 
         {isOpen && (
           <CardBox
             style={{
               position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
+              inset: 0,
               background: "#fff",
               borderRadius: "8px",
               opacity: 1,
