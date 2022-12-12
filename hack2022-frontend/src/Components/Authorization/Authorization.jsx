@@ -4,13 +4,16 @@ import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/userSlice";
+import { CustomizedSnackbar } from "../../Utils/CustomizedSnackbar";
 import cl from "./Authorization.module.scss";
+
 const Authorization = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [loginOnBlur, setLoginOnBlur] = useState(false);
   const [passwordOnBlur, setPasswordOnBlur] = useState(false);
   const [textSubmitButton, setTextSubmitButton] = useState("LOGIN");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const dispatch = useDispatch();
   const stylesForTextFields = {
     width: "100%",
@@ -20,6 +23,14 @@ const Authorization = () => {
   };
   return (
     <div className={cl.authWrapper}>
+      <CustomizedSnackbar
+        originOfSnackbar={{ horizontal: "center", vertical: "top" }}
+        message="Login or password is incorrect!"
+        severity="error"
+        autoHide={2500}
+        open={openSnackbar}
+        setOpen={setOpenSnackbar}
+      />
       <h1>Sign in</h1>
       <form
         onSubmit={(e) => {
@@ -31,6 +42,11 @@ const Authorization = () => {
             localStorage.setItem("auth", JSON.stringify(auth));
             dispatch(setUser({ login: login.toLowerCase() }));
           } else {
+            setLogin("");
+            setPassword("");
+            setLoginOnBlur(false);
+            setPasswordOnBlur(false);
+            setOpenSnackbar(true);
             setTextSubmitButton("LOGIN");
           }
         }}
