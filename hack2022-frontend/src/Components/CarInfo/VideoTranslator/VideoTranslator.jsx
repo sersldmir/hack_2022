@@ -7,7 +7,6 @@ import styles from "./VideoTranslator.module.scss";
 
 export const VideoTranslator = ({ videoName }) => {
   const [isClicked, setIsClicked] = useState(false);
-  const classes = cn(styles.camera__item, { [styles.camera__item_clicked]: isClicked });
   return (
     <CardBox className={cn(styles.camera__item, { [styles.camera__item_clicked]: isClicked })}>
       <div onClick={() => setIsClicked(!isClicked)} width={"100%"} height={"calc(100% /2)"} style={{ position: "relative" }}>

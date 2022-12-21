@@ -3,8 +3,8 @@ import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../store/userSlice";
 import { CustomizedSnackbar } from "../../Utils/CustomizedSnackbar";
+import { setUser } from "../../store/userSlice";
 import cl from "./Authorization.module.scss";
 
 const Authorization = () => {
@@ -15,6 +15,9 @@ const Authorization = () => {
   const [textSubmitButton, setTextSubmitButton] = useState("LOGIN");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const dispatch = useDispatch();
+  const baseURL = process.env.REACT_APP_BASE_URL;
+  console.log(baseURL);
+  const authURL = baseURL + "/auth";
   const stylesForTextFields = {
     width: "100%",
     "&.label": {
@@ -33,7 +36,7 @@ const Authorization = () => {
       />
       <h1>Sign in</h1>
       <form
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
           setTextSubmitButton("Logging...");
           const responseOK = true;
