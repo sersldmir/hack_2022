@@ -17,29 +17,30 @@ const Authorization = () => {
   const dispatch = useDispatch();
   const baseURL = process.env.REACT_APP_BASE_URL;
   const authURL = baseURL + "/auth";
-  /* 
-  Request: {
-    login,
-    password
+  /*
+  REACT_APP_BASE_URL=http://localhost:8080
+  Request: POST: {
+    login: string;
+    password: string;
   }
     Response:
     {
-      имя: string;
-      фамилия: string;
+      name: string;
+      lastName: string;
       role: string;
       accessToken: string; -> LocalStorage
     }
-  s*/
+  */
   const accessURL = baseURL + "/access";
   /* 
-  Request: {
-    accessToken: string
+  Request: POST: {
+    accessToken: string;
   }
     Response:
     {
-      functionality: true
+      functionality: boolean;
     }
-  s*/
+  */
   const stylesForTextFields = {
     width: "100%",
     "&.label": {
