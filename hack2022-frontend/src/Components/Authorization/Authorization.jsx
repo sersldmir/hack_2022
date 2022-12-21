@@ -16,8 +16,30 @@ const Authorization = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const dispatch = useDispatch();
   const baseURL = process.env.REACT_APP_BASE_URL;
-  console.log(baseURL);
   const authURL = baseURL + "/auth";
+  /* 
+  Request: {
+    login,
+    password
+  }
+    Response:
+    {
+      имя: string;
+      фамилия: string;
+      role: string;
+      accessToken: string; -> LocalStorage
+    }
+  s*/
+  const accessURL = baseURL + "/access";
+  /* 
+  Request: {
+    accessToken: string
+  }
+    Response:
+    {
+      functionality: true
+    }
+  s*/
   const stylesForTextFields = {
     width: "100%",
     "&.label": {
