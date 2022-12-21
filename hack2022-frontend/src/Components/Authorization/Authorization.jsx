@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { CustomizedSnackbar } from "../../Utils/CustomizedSnackbar";
@@ -17,30 +18,35 @@ const Authorization = () => {
   const dispatch = useDispatch();
   const baseURL = process.env.REACT_APP_BASE_URL;
   const authURL = baseURL + "/auth";
-  /*
-  REACT_APP_BASE_URL=http://localhost:8080
-  Request: POST: {
-    login: string;
-    password: string;
-  }
-    Response:
-    {
-      name: string;
-      lastName: string;
-      role: string;
-      accessToken: string; -> LocalStorage
-    }
-  */
+
   const accessURL = baseURL + "/access";
-  /* 
-  Request: POST: {
-    accessToken: string;
-  }
-    Response:
-    {
-      functionality: boolean;
-    }
-  */
+  const resetFrom = () => {
+    setLogin("");
+    setPassword("");
+    setLoginOnBlur(false);
+    setPasswordOnBlur(false);
+    setOpenSnackbar(true);
+    setTextSubmitButton("LOGIN");
+  };
+  const authenticateUser = () => {
+    axios
+      .post(authURL, { login, password }, { timeout: 600 })
+      .then((response) => {
+        const { login } = response.data;
+        const auth = { login: login.toLowerCase() };
+        localStorage.setItem("auth", JSON.stringify(auth));
+        dispatch(setUser({ login: login.toLowerCase() }));
+      })
+      .catch((error) => {
+        resetFrom();
+      });
+  };
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setTextSubmitButton("Logging...");
+    authenticateUser();
+  };
+
   const stylesForTextFields = {
     width: "100%",
     "&.label": {
@@ -58,26 +64,7 @@ const Authorization = () => {
         setOpen={setOpenSnackbar}
       />
       <h1>Sign in</h1>
-      <form
-        onSubmit={async (e) => {
-          e.preventDefault();
-          setTextSubmitButton("Logging...");
-          const responseOK = true;
-          if (responseOK) {
-            const auth = { login: login.toLowerCase() };
-            localStorage.setItem("auth", JSON.stringify(auth));
-            dispatch(setUser({ login: login.toLowerCase() }));
-          } else {
-            setLogin("");
-            setPassword("");
-            setLoginOnBlur(false);
-            setPasswordOnBlur(false);
-            setOpenSnackbar(true);
-            setTextSubmitButton("LOGIN");
-          }
-        }}
-        className={cl.loginWrapper}
-      >
+      <form onSubmit={onSubmit} className={cl.loginWrapper}>
         <TextField
           sx={stylesForTextFields}
           id="login"
