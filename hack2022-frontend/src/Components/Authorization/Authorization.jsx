@@ -2,7 +2,7 @@
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { CustomizedSnackbar } from "../../Utils/CustomizedSnackbar";
 import { setUser } from "../../store/userSlice";
@@ -11,6 +11,8 @@ import cl from "./Authorization.module.scss";
 const Authorization = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const loginRef = useRef();
+  const passwordRef = useRef();
   const [loginOnBlur, setLoginOnBlur] = useState(false);
   const [passwordOnBlur, setPasswordOnBlur] = useState(false);
   const [textSubmitButton, setTextSubmitButton] = useState("LOGIN");
@@ -23,6 +25,8 @@ const Authorization = () => {
   const resetFrom = () => {
     setLogin("");
     setPassword("");
+    loginRef.current.blur();
+    passwordRef.current.blur();
     setLoginOnBlur(false);
     setPasswordOnBlur(false);
     setOpenSnackbar(true);
@@ -66,6 +70,7 @@ const Authorization = () => {
       <h1>Sign in</h1>
       <form onSubmit={onSubmit} className={cl.loginWrapper}>
         <TextField
+          inputRef={loginRef}
           sx={stylesForTextFields}
           id="login"
           label="Login"
@@ -80,6 +85,7 @@ const Authorization = () => {
           helperText={login.trim().length === 0 && loginOnBlur ? "Enter valid login!" : ""}
         />
         <TextField
+          inputRef={passwordRef}
           sx={stylesForTextFields}
           id="password"
           type={"password"}
